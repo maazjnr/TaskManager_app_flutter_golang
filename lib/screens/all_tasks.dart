@@ -2,12 +2,41 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_golang/colors/app_colors.dart';
+import 'package:flutter_golang/widgets/task_widget.dart';
 
 class AllTasks extends StatelessWidget {
   const AllTasks({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List myData = ["Try harder", "Try smarter"];
+
+    final leftEditIcon = Container(
+      alignment: Alignment.centerLeft,
+      margin: const EdgeInsets.only(bottom: 10),
+      color: const Color(0xFF2e3253).withOpacity(0.5),
+      child: const Padding(
+        padding: EdgeInsets.only(left: 20),
+        child: Icon(
+          Icons.edit,
+          color: Colors.white,
+        ),
+      ),
+    );
+
+    final rightDeleteIcon = Container(
+      alignment: Alignment.centerRight,
+      margin: const EdgeInsets.only(bottom: 10),
+      color: Colors.red,
+      child: const Padding(
+        padding: EdgeInsets.only(right: 20),
+        child: Icon(
+          Icons.delete,
+          color: Colors.white,
+        ),
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -61,6 +90,29 @@ class AllTasks extends StatelessWidget {
                 )
               ],
             ),
+          ),
+          Flexible(
+            child: ListView.builder(
+                itemCount: myData.length,
+                itemBuilder: (context, index) {
+                  return Dismissible(
+                    background: leftEditIcon,
+                    secondaryBackground: rightDeleteIcon,
+                    onDismissed: (DismissDirection direction) =>
+                        {print("Hello world")},
+                    confirmDismiss: (DismissDirection direction) async {
+                      return false;
+                      print('hello');
+                    },
+                    key: ObjectKey(index),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 10),
+                      child: TaskWidget(
+                          text: myData[index], color: Colors.blueGrey),
+                    ),
+                  );
+                }),
           )
         ],
       ),
