@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_golang/colors/app_colors.dart';
 import 'package:flutter_golang/widgets/button_widget.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../widgets/textfield_widget.dart';
 
@@ -32,12 +34,15 @@ class AddTask extends StatelessWidget {
                 const SizedBox(
                   height: 60,
                 ),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: AppColors.secondaryColor,
-                    ))
+                InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: AppColors.mainColor,
+                  ),
+                ),
               ],
             ),
             Column(

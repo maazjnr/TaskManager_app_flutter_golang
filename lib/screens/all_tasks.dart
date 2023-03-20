@@ -2,7 +2,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_golang/colors/app_colors.dart';
+import 'package:flutter_golang/widgets/button_widget.dart';
 import 'package:flutter_golang/widgets/task_widget.dart';
+import 'package:get/get.dart';
 
 class AllTasks extends StatelessWidget {
   const AllTasks({super.key});
@@ -42,18 +44,23 @@ class AllTasks extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            alignment: Alignment.topLeft,
-            padding: const EdgeInsets.only(left: 20, top: 60),
-            width: double.maxFinite,
-            height: MediaQuery.of(context).size.height / 3.2,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/header.jpg'), fit: BoxFit.cover)),
-            child: Icon(
-              Icons.arrow_back,
-              color: AppColors.mainColor,
-            ),
-          ),
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.only(left: 20, top: 60),
+              width: double.maxFinite,
+              height: MediaQuery.of(context).size.height / 3.2,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/header.jpg'),
+                      fit: BoxFit.cover)),
+              child: InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: AppColors.mainColor,
+                ),
+              )),
           Container(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Row(
@@ -101,8 +108,47 @@ class AllTasks extends StatelessWidget {
                     onDismissed: (DismissDirection direction) =>
                         {print("Hello world")},
                     confirmDismiss: (DismissDirection direction) async {
-                      return false;
-                      print('hello');
+                      if (direction == DismissDirection.startToEnd) {
+                        showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            barrierColor: Colors.transparent,
+                            context: context,
+                            builder: (_) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff2e3253)
+                                        .withOpacity(0.4),
+                                    borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20))),
+                                height: 550,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ButtonWidget(
+                                          backgroundColor: AppColors.mainColor,
+                                          text: "View",
+                                          textColor: Colors.white),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      ButtonWidget(
+                                          backgroundColor: AppColors.mainColor,
+                                          text: "Edit",
+                                          textColor: Colors.white),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                        return false;
+                      } else {
+                        return Future.delayed(const Duration(seconds: 1),
+                            () => direction == DismissDirection.endToStart);
+                      }
                     },
                     key: ObjectKey(index),
                     child: Container(

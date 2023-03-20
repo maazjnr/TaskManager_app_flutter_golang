@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_golang/colors/app_colors.dart';
+import 'package:flutter_golang/screens/add_task.dart';
+import 'package:flutter_golang/screens/all_tasks.dart';
 import 'package:flutter_golang/widgets/button_widget.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,17 +48,31 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: MediaQuery.of(context).size.height / 3,
             ),
-            ButtonWidget(
-                backgroundColor: AppColors.mainColor,
-                text: 'Add Task',
-                textColor: Colors.white),
+            InkWell(
+              onTap: () {
+                Get.to(() => const AddTask(),
+                    transition: Transition.zoom,
+                    duration: const Duration(milliseconds: 500));
+              },
+              child: ButtonWidget(
+                  backgroundColor: AppColors.mainColor,
+                  text: 'Add Task',
+                  textColor: Colors.white),
+            ),
             const SizedBox(
               height: 15,
             ),
-            ButtonWidget(
-                backgroundColor: Colors.white,
-                text: 'View All',
-                textColor: AppColors.mainColor)
+            InkWell(
+              onTap: () {
+                Get.to(() => const AllTasks(),
+                    transition: Transition.fade,
+                    duration: const Duration(seconds: 1));
+              },
+              child: ButtonWidget(
+                  backgroundColor: Colors.white,
+                  text: 'View All',
+                  textColor: AppColors.mainColor),
+            )
           ],
         ),
       ),
