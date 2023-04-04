@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -60,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   textColor: Colors.white),
             ),
             const SizedBox(
-              height: 15,
+              height: 14,
             ),
             InkWell(
               onTap: () {
